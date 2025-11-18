@@ -21,4 +21,3 @@ password = input("Enter a password: ")
 print(f"Encrypted password: {encrypt(password)}")
 encrypted_password = encrypt(password)
 # print(f"Decrypted password: {decrypt(encrypted_password)}")
-#Hello
