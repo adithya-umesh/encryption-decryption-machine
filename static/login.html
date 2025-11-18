@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body {
+      background: beige;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial;
+    }
+
+    .box {
+      background: white;
+      width: 360px;
+      padding: 35px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+    }
+
+    h2 {
+      color: #A06B2C;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #d4c4a8;
+      margin-bottom: 14px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #D8C3A5;
+      border-radius: 8px;
+      color: #4b3a21;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    button:hover { background: #E6D6C2; }
+
+    a {
+      color: #A06B2C;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #msg { color: red; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Login</h2>
+
+    <input id="user" placeholder="Username">
+    <input id="pass" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+    <div id="msg"></div>
+
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
+
+<script>
+function login(){
+  fetch("/login",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: user.value,
+      password: pass.value
+    })
+  }).then(r=>r.json()).then(d=>{
+     if(d.success) location.href="index.html";
+     else msg.innerText="Invalid credentials";
+  })
+}
+</script>
+</body>
+</html>
