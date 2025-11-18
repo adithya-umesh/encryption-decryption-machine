@@ -20,8 +20,6 @@ def decrypt(password):
 password = input("Enter a password: ")
 print(f"Encrypted password: {encrypt(password)}")
 encrypted_password = encrypt(password)
-<<<<<<< HEAD
 # print(f"Decrypted password: {decrypt(encrypted_password)}")
-=======
-# print(f"Decrypted password: {decrypt(encrypted_password)}")
->>>>>>> f72de8f08697439545e9d22e5f5292071bd5d504
+
+
