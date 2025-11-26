@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Key</title>
+  <style>
+    body { background: beige; font-family: Arial; margin: 0; padding: 0; }
+
+    .topnav {
+      width: 100%;
+      background: #D8C3A5;
+      padding: 15px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 35px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .topnav div { cursor:pointer; color:#4b3a21; }
+
+    .box {
+      background:white; padding:25px; border-radius:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.18);
+      max-width:600px; margin:40px auto;
+    }
+
+    input {
+      width:100%; padding:12px; margin-top:10px;
+      border-radius:8px; border:1px solid #C9BFA5;
+    }
+
+    button {
+      width:100%; padding:12px; margin-top:15px; border:none;
+      border-radius:8px; background:#D8C3A5;
+      cursor:pointer; font-size:18px; font-weight:bold; color:#4b3a21;
+    }
+    button:hover { background:#E6D6C2; }
+
+    #out { color:#4b3a21; margin-top:15px; font-size:18px; white-space:pre-wrap; }
+  </style>
+</head>
+<body>
+
+<div class="topnav">
+  <div id="welcome"></div>
+  <div onclick="location.href='index.html'">Home</div>
+  <div onclick="location.href='encrypt.html'">Encrypt</div>
+  <div onclick="location.href='decrypt.html'">Decrypt</div>
+  <div onclick="location.href='create_key.html'">Create Key</div>
+  <div onclick="location.href='/logout'">Logout</div>
+</div>
+
+<div class="box">
+  <h2>Create Custom Shift Key</h2>
+
+  <label>Key Name:</label>
+  <input id="tame">
+
+  <label>Shift Pattern (numbers only):</label>
+  <input id="pattern">
+
+  <button onclick="createKey()">Create Key</button>
+
+  <pre id="out"></pre>
+</div>
+
+<script>
+fetch("/user",{method:"POST"}).then(r=>r.json()).then(d=>{
+  welcome.innerText = "Welcome, " + d.username;
+});
+
+function createKey(){
+ fetch("/create_key",{
+   method:"POST",
+   headers:{ "Content-Type":"application/json"},
+   body:JSON.stringify({
+       name: tame.value,
+       pattern: pattern.value
+   })
+ }).then(r=>r.json()).then(d=>{
+   out.innerText = d.success ? "Key Created Successfully!" : d.message;
+ });
+}
+</script>
+
+</body>
+</html>

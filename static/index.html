@@ -1,156 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Encrypt / Decrypt</title>
+  <title>Home</title>
   <style>
-    body { 
-       background: beige;
-       font-family: Arial;
-       height:100vh;
-       margin:0;
-       display:flex;
-       flex-direction:column;
-       align-items:center;
+    body {
+      background: beige;
+      font-family: Arial;
+      margin: 0;
+      padding: 0;
     }
 
-    /* 🔹 TOP NAV (NOW COMPACT & CENTERED) */
-    #topnav {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:25px;
-      padding:12px 0;
-      font-size:18px;
-      font-weight:bold;
-      color:#4b3a21;
-      margin-top:8px;
+    /* TOP NAV */
+    .topnav {
+      width: 100%;
+      background: #D8C3A5;
+      padding: 15px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 35px;
+      font-size: 18px;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
     }
 
-    #logoutBtn {
-      background:#C8B28F;
-      border:none;
-      padding:6px 14px;
-      border-radius:6px;
-      cursor:pointer;
-      font-size:15px;
-      font-weight:bold;
-      color:#4b3a21;
+    .topnav div { cursor:pointer; color:#4b3a21; }
+
+    /* KEY CARD STYLING */
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 10px;
     }
 
-    #logoutBtn:hover { background:#D7C8A8; }
-
-    /* MAIN CONTENT */
-    .wrap {
-      display:flex;
-      gap:40px;
-      margin-top:60px;
+    .key-card {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      font-size: 18px;
+      color: #4b3a21;
     }
 
-    .box {
-      background:white;
-      width:340px;
-      padding:25px;
-      border-radius:16px;
-      box-shadow:0 8px 24px rgba(0,0,0,0.18);
-    }
-
-    h3 { color:#A06B2C; margin-bottom:12px;}
-
-    textarea {
-      width:100%;
-      height:100px;
-      max-height:400px;
-      padding:8px;
-      border-radius:8px;
-      border:1px solid #C9BFA5;
-      resize:vertical;
-      overflow-wrap:break-word;
-      word-wrap:break-word;
-      white-space:pre-wrap;
-    }
-
-    button {
-      width:100%;
-      padding:10px;
-      margin-top:8px;
-      border:none;
-      border-radius:8px;
-      background:#D8C3A5;
-      cursor:pointer;
-      font-weight:bold;
-      color:#4b3a21;
-      font-size:16px;
-    }
-
-    button:hover { background:#E6D6C2; }
-
-    .output {
-      margin-top:8px;
-      min-height:22px;
-      color:#4b3a21;
-      word-wrap:break-word;
-      white-space:pre-wrap;
+    .title {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #4b3a21;
     }
   </style>
 </head>
 <body>
 
-<!-- 🔹 FIXED COMPACT TOP NAV -->
-<div id="topnav">
-  <div id="welcome">Welcome</div>
-  <button id="logoutBtn" onclick="logout()">Logout</button>
+<!-- TOP NAV -->
+<div class="topnav">
+  <div id="welcome"></div>
+  <div onclick="location.href='index.html'">Home</div>
+  <div onclick="location.href='encrypt.html'">Encrypt</div>
+  <div onclick="location.href='decrypt.html'">Decrypt</div>
+  <div onclick="location.href='create_key.html'">Create Key</div>
+  <div onclick="location.href='/logout'">Logout</div>
 </div>
 
-<!-- 🔹 ENCRYPT/DECRYPT BOXES -->
-<div class="wrap">
-
-  <div class="box">
-    <h3>Encrypt</h3>
-    <textarea id="enc"></textarea>
-    <button onclick="encryptMsg()">Encrypt</button>
-    <div id="out1" class="output"></div>
-  </div>
-
-  <div class="box">
-    <h3>Decrypt</h3>
-    <textarea id="dec"></textarea>
-    <button onclick="decryptMsg()">Decrypt</button>
-    <div id="out2" class="output"></div>
-  </div>
-
+<div class="container">
+  <div class="title">Your Keys</div>
+  <div id="keys"></div>
 </div>
 
 <script>
 fetch("/user",{method:"POST"})
 .then(r=>r.json())
-.then(d=>{
-  if(d.username) welcome.innerText = "Welcome, " + d.username;
-});
+.then(d=>{ welcome.innerText = "Welcome, " + d.username; });
 
-/* LOGOUT */
-function logout(){ location.href="/logout"; }
-
-/* ENCRYPT */
-function encryptMsg(){
- fetch("/encrypt",{
-   method:"POST",
-   headers:{ "Content-Type":"application/json"},
-   body:JSON.stringify({message: enc.value})
- }).then(r=>r.json()).then(d=>{
-   out1.innerText = d.result;
- })
+function loadKeys() {
+  fetch("/keys",{method:"POST"})
+  .then(r=>r.json())
+  .then(d=>{
+    keys.innerHTML = "";
+    d.keys.forEach(k=>{
+      keys.innerHTML += `
+        <div class="key-card">
+          <b>Key:</b> ${k.name}<br>
+          <b>Pattern:</b> ${k.pattern}
+        </div>`;
+    });
+  });
 }
 
-/* DECRYPT */
-function decryptMsg(){
- fetch("/decrypt",{
-   method:"POST",
-   headers:{ "Content-Type":"application/json"},
-   body:JSON.stringify({message: dec.value})
- }).then(r=>r.json()).then(d=>{
-   out2.innerText = d.result;
- })
-}
+loadKeys();
 </script>
 
 </body>
