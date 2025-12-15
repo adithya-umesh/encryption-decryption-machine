@@ -6,7 +6,7 @@ Built for learning crypto basics, Flask auth, and clean backend logic.
 
 ---
 
-## ✨ Features
+## Features
 
 - User **signup / login / logout** (session-based)
 - **Password strength checker** (Very Weak → Very Strong)
@@ -29,7 +29,7 @@ Built for learning crypto basics, Flask auth, and clean backend logic.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Python**
 - **Flask**
@@ -42,7 +42,7 @@ Built for learning crypto basics, Flask auth, and clean backend logic.
 
 ---
 
-## 🚀 Setup & Run
+## Setup & Run
 
 ```bash
 pip install -r requirements.txt
