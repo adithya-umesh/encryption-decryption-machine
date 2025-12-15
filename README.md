@@ -11,7 +11,7 @@ Built for learning crypto basics, Flask auth, and clean backend logic.
 ## Team
 
 - **[Adithya Umesh](https://github.com/adithya-umesh)**  
-- **[Adithya Kiran](hhttps://github.com/fire-1607)**  
+- **[Adithya Kiran](https://github.com/fire-1607)**  
 - **[Adarsh A Kulkarni](https://github.com/adarsh161206-pixel)**
 - **[Adithya N](https://github.com/jokerghostdollar-cmd)**  
 
