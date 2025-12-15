@@ -1,5 +1,5 @@
 # ROT13 -> SHIFT EVERY ALPHABET BY 13 ALPHABETS. Example: A becomes N, B becomes O
-
+# Simplified ROT13 logic without modulo wrap
 
 def encrypt(password):
     encrypted = ""
@@ -21,5 +21,6 @@ password = input("Enter a password: ")
 print(f"Encrypted password: {encrypt(password)}")
 encrypted_password = encrypt(password)
 # print(f"Decrypted password: {decrypt(encrypted_password)}")
+
 
 
